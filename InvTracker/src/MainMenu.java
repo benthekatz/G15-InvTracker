@@ -27,10 +27,12 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     private static boolean changed = false;
 
     //table
-    private static JTable table;
+    private JTable table;
 
     //buttons
     private JButton AddEntry;
+    private JButton editEntry;
+    private JButton deleteEntry;
     private static JButton save;
     private JButton Logout;
 
@@ -39,6 +41,9 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     private JPopupMenu pm;
     private JMenuItem d;
 
+    private int rowSelect;
+    private int colSelect;
+
     public MainMenu() {
 
         setObjDisplay();
@@ -46,7 +51,11 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         save.setEnabled(false);
         save.addActionListener(this);
 
-        table = new JTable(model);
+        table = new JTable(model){
+        	public boolean isCellEditable(int row, int column){
+                return false;
+        	}
+        };
         getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         table.getModel().addTableModelListener(this);
 
@@ -58,13 +67,25 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 new AddEntry().setVisible(true);
             }
         });
-
+        
+        //Edit and action listener
+        editEntry = new JButton("Edit Entry");
+        editEntry.setEnabled(false);
+        editEntry.addActionListener(this);
+        
+        //Delete and action listener
+        deleteEntry = new JButton("Delete Entry");
+        deleteEntry.setEnabled(false);
+        deleteEntry.addActionListener(this);
+        
         //Logout and action listener
         Logout = new JButton("Logout");
         Logout.addActionListener(this);
 
         JPanel jp = new JPanel();
         jp.add(AddEntry);
+        jp.add(editEntry);
+        jp.add(deleteEntry);
         jp.add(Logout);
         jp.add(save);
 
@@ -76,6 +97,21 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         table.setCellSelectionEnabled(true);
         ListSelectionModel cellSelectionModel = table.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                rowSelect = row;
+                int column = table.columnAtPoint(evt.getPoint());
+                colSelect = column;
+                if (row >= 0 && column >= 0) {
+                    editEntry.setEnabled(true);
+                    deleteEntry.setEnabled(true);
+
+                }
+            }
+        });
 
         this.add(jp, BorderLayout.SOUTH);
         this.setTitle("Inventory Tracker");
@@ -106,7 +142,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
 
     }
 
-    public void rmRows() throws ArrayIndexOutOfBoundsException {
+    public void rmRows() {//throws ArrayIndexOutOfBoundsException {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -140,10 +176,41 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == d) {
             rmRows();
+            
         } else if (e.getSource() == save) {
             savingObject();
             save.setEnabled(false);
             changed = false;
+            
+        } else if (e.getSource()== editEntry){
+        	String temp = "";
+        	
+        	if(colSelect==0){
+        	temp = JOptionPane.showInputDialog("Enter a new name value: ");
+        	table.setValueAt(temp, rowSelect, colSelect);
+        	
+        	} else if (colSelect==1){
+        	temp = JOptionPane.showInputDialog("Enter a new quantity value: ");
+        	int x = Integer.parseInt(temp);
+        	table.setValueAt(x, rowSelect, colSelect);
+        	
+        	} else if (colSelect==2){
+        	temp = JOptionPane.showInputDialog("Enter a new notes value: ");
+            table.setValueAt(temp, rowSelect, colSelect);
+        	}
+
+        	editEntry.setEnabled(false);
+        	updateTableObjs();
+        	
+        } else if (e.getSource() == deleteEntry){
+        	String name = (String) table.getModel().getValueAt(rowSelect, colSelect);
+        	int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your entry: " +name+ "?", "Are you sure?", JOptionPane.YES_NO_OPTION);
+        	if(choice == 0){
+        	((DefaultTableModel)table.getModel()).removeRow(rowSelect);
+        	}
+        	
+        	deleteEntry.setEnabled(false);
+        	
         } else if (e.getSource() == Logout) {
         //old logout method below
             /*int x = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?");
@@ -151,6 +218,8 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 this.setVisible(false);
                 new InitialFrame();
             }*/
+        	
+        if(changed == true){
         int answer = JOptionPane.showConfirmDialog(null, "Would You Like to Save your Changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
                     savingObject();
@@ -162,6 +231,10 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 } else if (answer == JOptionPane.CANCEL_OPTION) {
                     
                 }
+        } else if (changed == false){
+        	this.setVisible(false);
+            app.main(new String[0]);
+        }
         }
     }
 
@@ -194,18 +267,19 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     }
 
     private void updateArrayList(int row, int col) {
-        if (col == 0) {
-            app.activeDB.getObjects().get(row).setID(table.getValueAt(row, col).toString());
+    	int actualVal = row + 1;
+    	
+    	if (col == 0) {
+            app.activeDB.getObjects().get(actualVal).setObjectTitle(table.getValueAt(row, col).toString());
+            System.out.print(actualVal);
         }
-        if (col == 1) {
-            app.activeDB.getObjects().get(row).setObjectTitle(table.getValueAt(row, col).toString());
+        else if (col == 1) {
+            app.activeDB.getObjects().get(actualVal).setQuantity(table.getValueAt(row, col).toString());
+            System.out.print(actualVal);
         }
-        if (col == 2) {
-            app.activeDB.getObjects().get(row).setQuantity(table.getValueAt(row, col).toString());
-        }
-        if (col == 3) {
-            app.activeDB.getObjects().get(row).setNote(table.getValueAt(row, col).toString());
+        else if (col == 2) {
+            app.activeDB.getObjects().get(actualVal).setNote(table.getValueAt(row, col).toString());
+            System.out.print(actualVal);
         }
     }
-
 }
