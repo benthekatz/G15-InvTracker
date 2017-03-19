@@ -40,6 +40,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     private JFrame ui;
     private JPopupMenu pm;
     private JMenuItem d;
+    private JPanel jp;
 
     private int rowSelect;
     private int colSelect;
@@ -82,13 +83,14 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         Logout = new JButton("Logout");
         Logout.addActionListener(this);
 
-        JPanel jp = new JPanel();
+        jp = new JPanel();
         jp.add(AddEntry);
         jp.add(editEntry);
         jp.add(deleteEntry);
         jp.add(Logout);
         jp.add(save);
-
+        jp.setFocusable(true);
+        
         pm = new JPopupMenu();
         d = new JMenuItem("Deleted");
         pm.add(d);
@@ -199,6 +201,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
             table.setValueAt(temp, rowSelect, colSelect);
         	}
 
+        	jp.requestFocus();
         	editEntry.setEnabled(false);
         	updateTableObjs();
         	
