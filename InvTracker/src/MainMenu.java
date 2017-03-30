@@ -189,16 +189,34 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         	
         	if(colSelect==0){
         	temp = JOptionPane.showInputDialog("Enter a new name value: ");
+                if(temp == null || (temp != null && ("".equals(temp))))   
+                    {
+                        //do nothing
+                    }
+                else{
         	table.setValueAt(temp, rowSelect, colSelect);
+                }
         	
         	} else if (colSelect==1){
         	temp = JOptionPane.showInputDialog("Enter a new quantity value: ");
+                if(temp == null || (temp != null && ("".equals(temp))))   
+                    {
+                        //do nothing
+                    }
+                else{
         	int x = Integer.parseInt(temp);
         	table.setValueAt(x, rowSelect, colSelect);
+                }
         	
         	} else if (colSelect==2){
         	temp = JOptionPane.showInputDialog("Enter a new notes value: ");
-            table.setValueAt(temp, rowSelect, colSelect);
+                if(temp == null || (temp != null && ("".equals(temp))))   
+                    {
+                        //do nothing
+                    }
+                else{
+                table.setValueAt(temp, rowSelect, colSelect);
+                }
         	}
 
         	jp.requestFocus();
