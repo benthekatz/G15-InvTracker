@@ -1,9 +1,10 @@
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 //inventory objects (things that will populate main menu table)
-public class InvObject {
+public class InvObject implements Serializable{
 
     private String ID;
     private String objectTitle;

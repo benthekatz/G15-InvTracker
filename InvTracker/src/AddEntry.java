@@ -73,10 +73,16 @@ public class AddEntry extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null,"You didn't provide a quantity","Failed",JOptionPane.ERROR_MESSAGE);
                     return;
                 }       
-                 
+                
+                 //entry is placeholder for addentry information
                 InvObject entry = new InvObject(nameField.getText(),quantityField.getText(), noteField.getText());
+                
+                //append InvObject information to activeDB in main class (app)
+                app.appendObject(entry);
+                
                 MainMenu.addRows(nameField.getText(), quantityField.getText(), noteField.getText());
                 
+                //writes to username.ser file
         	appendToSer(LoginPanel.whosLoggedOn(), entry); 
                 
                 this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
