@@ -7,8 +7,8 @@ import javax.swing.*;
 
 public class AddEntry extends JFrame implements ActionListener {
     
-    private static final int FRAME_WIDTH = 250;
-    private static final int FRAME_HEIGHT = 250;
+    private static final int FRAME_WIDTH = 350;
+    private static final int FRAME_HEIGHT = 350;
     
     private JButton AddEntry, Cancel;
     
@@ -21,6 +21,7 @@ public class AddEntry extends JFrame implements ActionListener {
 
     public AddEntry() {
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        this.setTitle("Add Entry");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
         
@@ -32,7 +33,8 @@ public class AddEntry extends JFrame implements ActionListener {
         //Text fields
         nameField = new JTextField(20);
         quantityField = new JTextField(20);
-        noteField = new JTextArea();
+        noteField = new JTextArea(5,20);
+        noteField.setLineWrap(true);
 
         //Jbuttons
         AddEntry = new JButton("Add Entry");
@@ -47,15 +49,23 @@ public class AddEntry extends JFrame implements ActionListener {
     }
 
     private JPanel createPanel() {
-        JPanel panel = new JPanel(new GridLayout(4, 2));
-        panel.add(objectName);
-        panel.add(nameField);
-        panel.add(objectQuantity);
-        panel.add(quantityField);
-        panel.add(description);
-        panel.add(noteField);
-        panel.add(AddEntry);
-        panel.add(Cancel);
+        JPanel panel = new JPanel(new GridLayout(4,1));
+        JPanel namepanel = new JPanel(new FlowLayout());
+        JPanel numpanel = new JPanel(new FlowLayout());
+        JPanel notepanel = new JPanel(new FlowLayout());
+        JPanel buttonpanel = new JPanel(new FlowLayout());
+        namepanel.add(objectName);
+        namepanel.add(nameField);
+        numpanel.add(objectQuantity);
+        numpanel.add(quantityField);
+        notepanel.add(description);
+        notepanel.add(noteField);
+        buttonpanel.add(AddEntry);
+        buttonpanel.add(Cancel);
+        panel.add(namepanel);
+        panel.add(numpanel);
+        panel.add(notepanel);
+        panel.add(buttonpanel);
         return panel;
     }
 

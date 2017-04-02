@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.*;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -28,6 +29,8 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
 
     //table
     private JTable table;
+    
+    private JLabel hints;
 
     //buttons
     private JButton AddEntry;
@@ -57,9 +60,14 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 return false;
         	}
         };
+        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+        table.setFont(new Font("Serif", Font.PLAIN, 16));
+        
         getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         table.getModel().addTableModelListener(this);
 
+        hints = new JLabel("<html>Click a cell and 'Edit Entry' to edit said cell.<br>Click a cell and 'Delete Entry' to delete the row.");
+        
         //New object and action listener
         AddEntry = new JButton("Add Entry");
         AddEntry.addActionListener(new ActionListener() {
@@ -84,6 +92,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         Logout.addActionListener(this);
 
         jp = new JPanel();
+        jp.add(hints);
         jp.add(AddEntry);
         jp.add(editEntry);
         jp.add(deleteEntry);
@@ -117,7 +126,8 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
 
         this.add(jp, BorderLayout.SOUTH);
         this.setTitle("Inventory Tracker");
-        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        //this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        this.pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -195,6 +205,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                     }
                 else{
         	table.setValueAt(temp, rowSelect, colSelect);
+                updateArrayList(rowSelect, colSelect);
                 }
         	
         	} else if (colSelect==1){
@@ -206,6 +217,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 else{
         	int x = Integer.parseInt(temp);
         	table.setValueAt(x, rowSelect, colSelect);
+                updateArrayList(rowSelect, colSelect);
                 }
         	
         	} else if (colSelect==2){
@@ -216,6 +228,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                     }
                 else{
                 table.setValueAt(temp, rowSelect, colSelect);
+                updateArrayList(rowSelect, colSelect);
                 }
         	}
 
@@ -227,7 +240,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         	String name = (String) table.getModel().getValueAt(rowSelect, colSelect);
         	int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your entry: " +name+ "?", "Are you sure?", JOptionPane.YES_NO_OPTION);
         	if(choice == 0){
-        	((DefaultTableModel)table.getModel()).removeRow(rowSelect);
+        	rmRows();
         	}
         	
         	deleteEntry.setEnabled(false);
@@ -288,8 +301,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     }
 
     private void updateArrayList(int row, int col) {
-    	int actualVal = row + 1;
-    	
+    	int actualVal = row;
     	if (col == 0) {
             app.activeDB.getObjects().get(actualVal).setObjectTitle(table.getValueAt(row, col).toString());
             System.out.print(actualVal);
