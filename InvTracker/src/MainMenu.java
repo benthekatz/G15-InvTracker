@@ -61,7 +61,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         	}
         };
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
-        table.setFont(new Font("Serif", Font.PLAIN, 16));
+        table.setFont(new Font("Arial", Font.PLAIN, 14));
         
         getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         table.getModel().addTableModelListener(this);

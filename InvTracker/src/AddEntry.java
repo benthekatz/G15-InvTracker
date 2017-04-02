@@ -8,7 +8,7 @@ import javax.swing.*;
 public class AddEntry extends JFrame implements ActionListener {
     
     private static final int FRAME_WIDTH = 350;
-    private static final int FRAME_HEIGHT = 350;
+    private static final int FRAME_HEIGHT = 250;
     
     private JButton AddEntry, Cancel;
     
