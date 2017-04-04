@@ -12,7 +12,7 @@ public class AddEntry extends JFrame implements ActionListener {
     
     private JButton AddEntry, Cancel;
     
-    private JLabel objectName, objectQuantity, description;
+    private JLabel objectName, objectQuantity;
     private JTextField nameField, quantityField;
     private JTextArea noteField;
 
@@ -27,14 +27,20 @@ public class AddEntry extends JFrame implements ActionListener {
         
         //Labels
         objectName = new JLabel("Name:");
-        objectQuantity = new JLabel("Quantity:");
-        description = new JLabel("Notes:");
+        objectQuantity = new JLabel("   Quantity:");
         
         //Text fields
-        nameField = new JTextField(20);
-        quantityField = new JTextField(20);
-        noteField = new JTextArea(5,20);
+        nameField = new JTextField(10);
+        quantityField = new JTextField(10);
+        noteField = new JTextArea(4,20);
         noteField.setLineWrap(true);
+        noteField.append("Enter notes here.");
+        noteField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                noteField.setText("");
+            }
+        });
 
         //Jbuttons
         AddEntry = new JButton("Add Entry");
@@ -58,7 +64,6 @@ public class AddEntry extends JFrame implements ActionListener {
         namepanel.add(nameField);
         numpanel.add(objectQuantity);
         numpanel.add(quantityField);
-        notepanel.add(description);
         notepanel.add(noteField);
         buttonpanel.add(AddEntry);
         buttonpanel.add(Cancel);

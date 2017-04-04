@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class NewUser extends JFrame implements ActionListener {
     
-    private static final int FRAME_WIDTH = 250;
+    private static final int FRAME_WIDTH = 350;
     private static final int FRAME_HEIGHT = 250;
     
     private JButton CreateUsername;
@@ -30,9 +30,9 @@ public class NewUser extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setVisible(true);
 
-        Username = new JTextField(20);
-        UsernamePassword = new JPasswordField();
-        confirmUsernamePassword = new JPasswordField();
+        Username = new JTextField(10);
+        UsernamePassword = new JPasswordField(10);
+        confirmUsernamePassword = new JPasswordField(10);
 
         //JLabels
         NewUserLabel = new JLabel("User Name:");
@@ -51,15 +51,23 @@ public class NewUser extends JFrame implements ActionListener {
     }
 
     private JPanel createPanel() {
-        JPanel panel = new JPanel(new GridLayout(4, 2));
-        panel.add(NewUserLabel);
-        panel.add(Username);
-        panel.add(PasswordLabel);
-        panel.add(UsernamePassword);
-        panel.add(confirmPasswordLabel);
-        panel.add(confirmUsernamePassword);
-        panel.add(CreateUsername);
-        panel.add(Cancel);
+        JPanel panel = new JPanel(new GridLayout(4, 1));
+        JPanel usr = new JPanel(new FlowLayout());
+        JPanel pass = new JPanel(new FlowLayout());
+        JPanel conf = new JPanel(new FlowLayout());
+        JPanel buttons = new JPanel(new FlowLayout());
+        usr.add(NewUserLabel);
+        usr.add(Username);
+        pass.add(PasswordLabel);
+        pass.add(UsernamePassword);
+        conf.add(confirmPasswordLabel);
+        conf.add(confirmUsernamePassword);
+        buttons.add(CreateUsername);
+        buttons.add(Cancel);
+        panel.add(usr);
+        panel.add(pass);
+        panel.add(conf);
+        panel.add(buttons);
         return panel;
     }
 
