@@ -1,5 +1,6 @@
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.*;
 import java.io.FileOutputStream;
@@ -28,11 +29,13 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     private static boolean changed = false;
 
     //table
-    private JTable table;
-    
+    private JTable table;   
     private JLabel hints;
+    
+    private JTextField searchBar;
 
     //buttons
+    private JButton search;
     private JButton AddEntry;
     private JButton editEntry;
     private JButton deleteEntry;
@@ -44,6 +47,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     private JPopupMenu pm;
     private JMenuItem d;
     private JPanel jp;
+    private JPanel searchPanel;
 
     private int rowSelect;
     private int colSelect;
@@ -66,6 +70,10 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         table.getModel().addTableModelListener(this);
 
+        search = new JButton("Search");
+        search.addActionListener(this);
+        searchBar = new JTextField(20);
+        
         hints = new JLabel("<html>Click a cell and 'Edit Entry' to edit said cell.<br>Click a cell and 'Delete Entry' to delete the row.");
         
         //New object and action listener
@@ -91,6 +99,10 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
         Logout = new JButton("Logout");
         Logout.addActionListener(this);
 
+        searchPanel = new JPanel(new FlowLayout());
+        searchPanel.add(searchBar);
+        searchPanel.add(search);
+        
         jp = new JPanel();
         jp.add(hints);
         jp.add(AddEntry);
@@ -123,7 +135,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
                 }
             }
         });
-
+        this.add(searchPanel, BorderLayout.NORTH);
         this.add(jp, BorderLayout.SOUTH);
         this.setTitle("Inventory Tracker");
         //this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -186,7 +198,12 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
     @Override
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == d) {
+        if(e.getSource() == search){
+           String nameResult;
+           int quantityResult;
+           String notesResult;
+        }
+        else if (e.getSource() == d) {
             rmRows();
             
         } else if (e.getSource() == save) {
@@ -254,7 +271,7 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
             }*/
         	
         if(changed == true){
-        int answer = JOptionPane.showConfirmDialog(null, "Would You Like to Save your Changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION);
+        int answer = JOptionPane.showConfirmDialog(null, "Would You Like to save your changes?", "Warning", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (answer == JOptionPane.YES_OPTION) {
                     savingObject();
                     this.setVisible(false);
