@@ -18,6 +18,7 @@ public class AddEntry extends JFrame implements ActionListener {
 
     public static Database database;
     
+    String noteValue;
 
     public AddEntry() {
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -89,13 +90,19 @@ public class AddEntry extends JFrame implements ActionListener {
                     return;
                 }       
                 
+                //set def note value to blank
+                noteValue = noteField.getText();
+                if(noteValue.equals("Enter notes here.")){
+                    noteValue = "";
+                }
+                 
                  //entry is placeholder for addentry information
-                InvObject entry = new InvObject(nameField.getText(),quantityField.getText(), noteField.getText());
+                InvObject entry = new InvObject(nameField.getText(),quantityField.getText(), noteValue);
                 
                 //append InvObject information to activeDB in main class (app)
                 app.appendObject(entry);
                 
-                MainMenu.addRows(nameField.getText(), quantityField.getText(), noteField.getText());
+                MainMenu.addRows(nameField.getText(), quantityField.getText(), noteValue);
                 
                 //writes to username.ser file
         	appendToSer(LoginPanel.whosLoggedOn(), entry); 
