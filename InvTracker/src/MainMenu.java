@@ -199,9 +199,13 @@ public class MainMenu extends JFrame implements ActionListener, TableModelListen
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == search){
-           String nameResult;
-           int quantityResult;
-           String notesResult;
+           String keyword = searchBar.getText();
+           if(keyword.equals(null) || keyword.equals("") || keyword.equals(" ")){
+               JOptionPane.showMessageDialog(null, "You need to enter a search term.");
+           }
+           else{
+               new searchData(keyword);
+           }
         }
         else if (e.getSource() == d) {
             rmRows();
