@@ -4,12 +4,14 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -38,8 +40,8 @@ public class searchData {
         fillSearchResults(keyword);
                 DefaultTableModel tableModel = new DefaultTableModel(col, 0);
                 table = new JTable(tableModel);
-                table.setSize(600,600);
                 table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+                table.getColumnModel().getColumn(2).setPreferredWidth(100);
                 tablePanel = new JPanel();
                 tablePanel.add(table);
                 
@@ -62,7 +64,7 @@ public class searchData {
                 frame.add(tablePanel);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.add(new JScrollPane(table));
-                frame.pack();
+                //frame.pack();
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
        

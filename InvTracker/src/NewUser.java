@@ -77,27 +77,27 @@ public class NewUser extends JFrame implements ActionListener {
         	//makes sure text fields are not empty
                 if(Username.getText().equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Your Account entry is empty","Failed",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter a username.","Failed",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                  if(String.valueOf(UsernamePassword.getPassword()).equals(""))
                 {
-                    JOptionPane.showMessageDialog(null,"Your password entry is empty","Failed",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please enter a password.","Failed",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                  if(String.valueOf(confirmUsernamePassword.getPassword()).equals(""))
                  {
-                    JOptionPane.showMessageDialog(null,"Your confirmed password entry is empty","Failed",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Please confirm your password.","Failed",JOptionPane.ERROR_MESSAGE);
                     return;                     
                  }
                  if(new File(Username.getText() +".ser").exists())
                  {
-                    JOptionPane.showMessageDialog(null,"Account already exists","Failed",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Account already exists.","Failed",JOptionPane.ERROR_MESSAGE);
                     return;
                  }
                 if(!(String.valueOf(UsernamePassword.getPassword()).equals(String.valueOf(confirmUsernamePassword.getPassword()))))
                 {
-                    JOptionPane.showMessageDialog(null,"Your confirmed password does not matach","Failed",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,"Your original and confirmed passwords do not match.","Failed",JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
@@ -107,7 +107,7 @@ public class NewUser extends JFrame implements ActionListener {
                 
                 database = new Database(Username.getText(), String.valueOf(UsernamePassword.getPassword()));
         	writeToSer(Username.getText());
-                JOptionPane.showMessageDialog(null,"Account Created Successfully.");
+                JOptionPane.showMessageDialog(null,"Account created successfully.");
         	this.setVisible(false);
                 
         }
@@ -126,7 +126,7 @@ public class NewUser extends JFrame implements ActionListener {
         }
         catch(Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Cant not save your info into local", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error: Can't save your info into local storage.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.print(e);
             return;
         }

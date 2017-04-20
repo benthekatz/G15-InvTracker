@@ -75,15 +75,15 @@ public class LoginPanel extends JPanel implements ActionListener {
     	}
         else if (getInfo() == 2)
         {
-            JOptionPane.showMessageDialog(null, "Your credential does not match","Authentication Failed",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Incorrect username or password.","Authentication Failed",JOptionPane.ERROR_MESSAGE);
         }
         else if (getInfo() == 3)
         {
-            JOptionPane.showMessageDialog(null, "No Such User", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Incorrect username or password.", "Fatal Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(getInfo() == 4)
         {
-            JOptionPane.showMessageDialog(null,"Cant read the file","Fatal Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Error: Cant read the file.","Fatal Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -95,12 +95,12 @@ public class LoginPanel extends JPanel implements ActionListener {
         if (ae.getSource() == submit) {
                 if(username.getText().equals(""))
                 {
-                    JOptionPane.showMessageDialog(null, "You did not enter account", "warning", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You did not enter a username.", "warning", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if(String.valueOf(password.getPassword()).equals(""))
                 {
-                    JOptionPane.showMessageDialog(null, "You did not enter password", "warning", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You did not enter a password.", "warning", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 verifyDB();
