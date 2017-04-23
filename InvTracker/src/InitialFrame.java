@@ -5,11 +5,11 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 public class InitialFrame extends JFrame{
 
     public InitialFrame(){
-        super("Log In");
+        super("");
         LoginPanel lp = new LoginPanel();
         this.add(lp);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(350,150);
+        setSize(350,250);
         setResizable(false);
         setVisible(true);
     }

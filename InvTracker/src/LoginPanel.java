@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
@@ -21,14 +22,21 @@ public class LoginPanel extends JPanel implements ActionListener {
 
     private JLabel u;
     private JLabel p;
+    private JLabel blank;
 
     private JButton submit;
     private JButton newUser;
     private InitialFrame f;
+    
+    //images
+    ImageIcon icon = new ImageIcon("src/images/easytracker.png");
+    JLabel logo = new JLabel("", icon, JLabel.CENTER);
+    
+    
     public LoginPanel() {
         
         //initilizing
-        setBackground(Color.LIGHT_GRAY);
+        setBackground(Color.decode("#FFB36E"));
 
         //Jtextfields
         username = new JTextField(20);
@@ -37,18 +45,25 @@ public class LoginPanel extends JPanel implements ActionListener {
         //JLabels
         u = new JLabel("Username:");
         p = new JLabel("Password:");
+        blank = new JLabel("");
 
         //Jbuttons
         submit = new JButton("Log In");
         newUser = new JButton("New User");
+        
+        //Jbutton Colors
+        submit.setBackground(Color.decode("#FF8000"));
+        newUser.setBackground(Color.decode("#FF8000"));
 
         //add
+        add(logo);
         add(u);
         add(username);
         add(p);
         add(password);
         add(submit);
         add(newUser);
+        
         
         submit.addActionListener(this);
         newUser.addActionListener(this);
